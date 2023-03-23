@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IntervalsTest {
 
     @Test
-    void testintervalConstruction() {
+    void testintervalConstructionCorrectInput() {
         assertEquals(Intervals.intervalConstruction(new String[]{"M2", "C"}), "D");
         assertEquals(Intervals.intervalConstruction(new String[]{"P5", "B"}), "F#");
         assertEquals(Intervals.intervalConstruction(new String[]{"m2", "Fb", "asc"}), "Gbb");
@@ -22,7 +22,7 @@ class IntervalsTest {
         assertEquals(Intervals.intervalConstruction(new String[]{"P8", "Cb", "asc"}), "Cb");
     }
     @Test
-    void testintervalIndentification() {
+    void testintervalIndentificationCorrectInput() {
         assertEquals(Intervals.intervalIdentification(new String[]{"B", "F#"}), "P5");
         assertEquals(Intervals.intervalIdentification(new String[]{"Fb", "Gbb", "asc"}), "m2");
         assertEquals(Intervals.intervalIdentification(new String[]{"G", "F#"}), "M7");
@@ -32,5 +32,34 @@ class IntervalsTest {
         assertEquals(Intervals.intervalIdentification(new String[]{"E", "B", "dsc"}), "P4");
         assertEquals(Intervals.intervalIdentification(new String[]{"E#", "D#", "dsc"}), "M2");
         assertEquals(Intervals.intervalIdentification(new String[]{"B", "G#", "dsc"}), "m3");
+    }
+
+    @Test
+    void testintervalConstructionIncorrectInput() {
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M19", "C"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M5", "C"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"B6", "C"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{null, "C"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3", "C##"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3", "B&&"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3", "I"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3", null}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"m2", "Fb", "ascfgfgfg"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3", "C##","asc", "M3"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalConstruction(new String[]{"M3"}));
+    }
+    @Test
+    void testintervalIndentificationIncorrectInput() {
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B&&", "F#"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"C##", "F#"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"H", "F#"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{null, "F#"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B", "F#$"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B", "fdfd"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B", null}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"Fb", "Gbb", "gfgfg"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"Fb", "Gbb", "asc", "string"}));
+        assertThrows(IllegalArgumentException.class,() -> Intervals.intervalIdentification(new String[]{"B", "F##"}));
     }
 }

@@ -71,7 +71,7 @@ public class Intervals {
         if (!((args.length == 2)||(args.length == 3))) {
             throw new IllegalArgumentException("Illegal number of elements in input array");
         }
-        if(validateInputForIntervalConstruction(args)) {
+        if(checkIfInputForIntervalConstructionIsInvalid(args)) {
             throw new IllegalArgumentException("Illegal elements in input array");
         }
 
@@ -122,7 +122,7 @@ public class Intervals {
         if (!((args.length == 2)||(args.length == 3))) {
             throw new IllegalArgumentException("Illegal number of elements in input array");
         }
-        if(validateInputForIntervalIdentification(args)) {
+        if(checkIfInputForIntervalIdentificationIsInvalid(args)) {
             throw new IllegalArgumentException("Cannot identify the interval");
         }
 
@@ -171,11 +171,11 @@ public class Intervals {
         return buildIntervalBasedOnNumberAndQuality(intervalNumber,intervalQuality);
     }
 
-    private static boolean validateInputForIntervalConstruction(String[] args) {
-        if(!intervalMap.containsKey(args[0])) {
+    private static boolean checkIfInputForIntervalConstructionIsInvalid(String[] args) {
+        if(args[0] == null || !intervalMap.containsKey(args[0])) {
             return true;
         }
-        if(!noteMap.containsKey(args[1])) {
+        if(args[1] == null || !noteMap.containsKey(args[1])) {
             return true;
         }
         if(args.length == 3) {
@@ -186,11 +186,11 @@ public class Intervals {
         return false;
     }
 
-    private static boolean validateInputForIntervalIdentification(String[] args) {
-        if(!noteMap.containsKey(args[0])) {
+    private static boolean checkIfInputForIntervalIdentificationIsInvalid(String[] args) {
+        if(args[0] == null || !noteMap.containsKey(args[0])) {
             return true;
         }
-        if(!noteMap.containsKey(args[1]) & !extendedNoteMap.containsKey(args[1]) ) {
+        if(args[1] == null ||!noteMap.containsKey(args[1]) & !extendedNoteMap.containsKey(args[1]) ) {
             return true;
         }
         if(args.length == 3) {
